@@ -16,7 +16,7 @@ import PuntosPage from '../features/puntos/pages/PuntosPage';
 export function AppRoutes() {
   return (
     <DataProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route element={<AdminLayout />}>
             <Route path="/" element={<DashboardPage />} />
