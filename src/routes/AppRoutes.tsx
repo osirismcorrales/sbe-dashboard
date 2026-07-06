@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { DataProvider } from '../context/DataContext';
 import AdminLayout from '../components/layout/AdminLayout';
 import DashboardPage from '../features/dashboard/pages/DashboardPage';
@@ -29,6 +29,11 @@ export function AppRoutes() {
             <Route path="/encuestas" element={<EncuestasPage />} />
             <Route path="/empleados" element={<EmpleadosPage />} />
             <Route path="/puntos" element={<PuntosPage />} />
+
+            {/* Redirects from old routes */}
+            <Route path="/pagos" element={<Navigate to="/finanzas" replace />} />
+            <Route path="/mantenimiento" element={<Navigate to="/finanzas" replace />} />
+            <Route path="/reportes" element={<Navigate to="/finanzas" replace />} />
           </Route>
         </Routes>
       </BrowserRouter>
@@ -36,3 +41,4 @@ export function AppRoutes() {
   );
 }
 export default AppRoutes;
+
