@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
@@ -8,6 +8,12 @@ export function AdminLayout() {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [isNewSocioOpen, setIsNewSocioOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Close sidebar on navigation (for mobile drawer)
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location.pathname]);
 
   // Determine page title based on path
   const getPageTitle = (pathname: string) => {
@@ -24,12 +30,8 @@ export function AdminLayout() {
         return 'Gestión de Servicios';
       case '/accesos':
         return 'Registro de Ingresos y Egresos';
-      case '/pagos':
-        return 'Gestión de Pagos';
-      case '/mantenimiento':
-        return 'Gastos de Mantenimiento';
-      case '/reportes':
-        return 'Generación de Reportes';
+      case '/finanzas':
+        return 'Finanzas y Reportes';
       case '/encuestas':
         return 'Encuestas de Satisfacción';
       case '/empleados':
@@ -46,7 +48,7 @@ export function AdminLayout() {
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-gray-50 font-sans antialiased">
       {/* Sidebar (Left) */}
-      <Sidebar />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Main Area (Right) */}
       <div className="flex-1 flex flex-col h-full overflow-hidden">
@@ -56,10 +58,11 @@ export function AdminLayout() {
           onNewSocioClick={showSearchAndSocio ? () => setIsNewSocioOpen(true) : undefined}
           searchQuery={showSearchAndSocio ? searchQuery : undefined}
           onSearchChange={showSearchAndSocio ? setSearchQuery : undefined}
+          onMenuClick={() => setIsSidebarOpen(true)}
         />
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-8">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
           <Outlet context={{ searchQuery }} />
         </main>
       </div>

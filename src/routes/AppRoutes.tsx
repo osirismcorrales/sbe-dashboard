@@ -25,9 +25,7 @@ export function AppRoutes() {
             <Route path="/reservas" element={<ReservasPage />} />
             <Route path="/servicios" element={<ServiciosPage />} />
             <Route path="/accesos" element={<AccesosPage />} />
-            <Route path="/pagos" element={<FinanzasPage initialTab="pagos" />} />
-            <Route path="/mantenimiento" element={<FinanzasPage initialTab="mantenimiento" />} />
-            <Route path="/reportes" element={<FinanzasPage initialTab="reportes" />} />
+            <Route path="/finanzas" element={<FinanzasPage />} />
             <Route path="/encuestas" element={<EncuestasPage />} />
             <Route path="/empleados" element={<EmpleadosPage />} />
             <Route path="/puntos" element={<PuntosPage />} />

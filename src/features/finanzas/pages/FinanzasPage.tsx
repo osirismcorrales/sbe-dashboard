@@ -22,19 +22,10 @@ const initialGastos: GastoMantenimiento[] = [
   { id: 'gas-4', servicioNombre: 'Tenis', monto: 8000, fecha: '2026-05-25', responsable: 'Luis Gómez', observaciones: 'Compra de flejes para la red' }
 ];
 
-interface FinanzasPageProps {
-  initialTab?: 'pagos' | 'mantenimiento' | 'reportes';
-}
-
-export function FinanzasPage({ initialTab = 'pagos' }: FinanzasPageProps) {
+export function FinanzasPage() {
   const { pagos, reservas, socios, servicios } = useData();
-  const [activeTab, setActiveTab] = useState<'pagos' | 'mantenimiento' | 'reportes'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'pagos' | 'mantenimiento' | 'reportes'>('pagos');
   const [gastos, setGastos] = useState<GastoMantenimiento[]>(initialGastos);
-
-  // Sync state when initialTab prop changes from sidebar navigation
-  React.useEffect(() => {
-    setActiveTab(initialTab);
-  }, [initialTab]);
 
   // --- REPORT BUILDER STATES ---
   const [reportType, setReportType] = useState<'pagos' | 'reservas_servicio' | 'reservas_fecha' | 'socios' | 'gastos'>('pagos');
@@ -147,7 +138,7 @@ export function FinanzasPage({ initialTab = 'pagos' }: FinanzasPageProps) {
   return (
     <div className="space-y-6 select-none text-xs">
       {/* Navigation Tabs */}
-      <div className="flex border-b border-gray-200 bg-white p-2 rounded-xl border shadow-2xs gap-2">
+      <div className="flex flex-wrap border-b border-gray-200 bg-white p-2 rounded-xl border shadow-2xs gap-2">
         <button
           onClick={() => setActiveTab('pagos')}
           className={cn(
@@ -384,8 +375,8 @@ export function FinanzasPage({ initialTab = 'pagos' }: FinanzasPageProps) {
               </CardHeader>
 
               {/* Report Table */}
-              <CardContent className="p-0">
-                <table className="w-full text-left border-collapse">
+              <CardContent className="p-0 overflow-x-auto">
+                <table className="w-full text-left border-collapse min-w-[600px]">
                   <thead>
                     <tr className="border-b-2 border-gray-200 text-gray-800 font-bold bg-gray-100/50 text-[10px]">
                       <th className="py-2.5 px-6 w-28">{reportMetadata.columns[0]}</th>
